@@ -87,3 +87,8 @@ echo "*** Vocabulary preparation finished!"
 echo "Removing from vocabulary _NOISE_, and  all '_' words from vocab-test.txt"
 cut -d' ' -f2 $test_text | tr ' ' '\n' | grep -v '_' | sort -u > $locdata/vocab-test.txt
 
+
+wget "https://docs.google.com/uc?id=0B_cd-iN3UhaVaGhYWW1aOVVtc0E&export=download" -O $locdata/database_dump_classes.txt
+cut -d' ' -f2- $train_text > $locdata/lm_train_plain.txt
+
+local/replace_with_classes.py $locdata/lm_train_plain.txt $locdata/database_dump_classes.txt $locdata/train_class_estimate $locdata/lm_train_class_labels.txt
